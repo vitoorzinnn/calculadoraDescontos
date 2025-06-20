@@ -1,5 +1,9 @@
 # calculadoraDescontos
-Projeto ETB 2° Semestre - Linguagem Técnica de Programação [Java]
+
+Calculadora que calcula e armazena descontos com base na entrada de dados do tipo de cliente inserido (VIP ou REGULAR).
+
+Projeto ETB A3 2° Semestre - Linguagem Técnica de Programação [Java]
+Projeto orientado pelo professor Matheus Rosa, @profmatheusrosa
 
 Funcionalidades
 Estrutura de Classes:
@@ -119,4 +123,59 @@ Média: R$ 61.67
 6. Sair
 Escolha uma opção: 6
 Programa finalizado!
+```
+
+## Diagrama UML
+```mermaid
+classDiagram
+    class Desconto {
+        <<abstract>>
+        -double valorCompra
+        -double valorDesconto
+        -String tipoCliente
+        +Desconto(double valorCompra, String tipoCliente)
+        +getValorCompra() double
+        +getValorDesconto() double
+        +getTipoCliente() String
+        +calcularDesconto() double
+    }
+
+    class Calculavel {
+        <<interface>>
+        +calcularDesconto() double
+        +getValorFinal() double
+    }
+
+    class ClienteRegular {
+        +ClienteRegular(double valorCompra)
+        +calcularDesconto() double
+        +getValorFinal() double
+    }
+
+    class ClienteVIP {
+        +ClienteVIP(double valorCompra)
+        +calcularDesconto() double
+        +getValorFinal() double
+    }
+
+    class DescontoInvalidoException {
+        +DescontoInvalidoException(String mensagem)
+    }
+
+    class Main {
+        -ArrayList~Desconto~ historico
+        +calcularNovoDesconto(double valorCompra, String tipoCliente) Desconto
+        +getHistorico() ArrayList~Desconto~
+        +adicionarAoHistorico(Desconto desconto) void
+        +removerDoHistorico(int indice) void
+        +limparHistorico() void
+        +getEstatisticas() String
+    }
+
+    Desconto <|-- ClienteRegular
+    Desconto <|-- ClienteVIP
+    Calculavel <|.. ClienteRegular
+    Calculavel <|.. ClienteVIP
+    Main --> Desconto
+    Main --> DescontoInvalidoException
 ```
